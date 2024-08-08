@@ -5,10 +5,11 @@ import generateTokenAndSetCookie from "../utils/generateToken.js";
 
 
 
-export const singup = async(req , res)=>{
+export const signup = async(req , res)=>{
     try{
-     const {fullName , username , password, confirmpassword, gender} = req.body;
-     if(password!==confirmpassword){
+     const {fullName , username , password, confirmPassword, gender} = req.body;
+     console.log(password);
+     if(password!==confirmPassword){
         return res.status(400).json({error:"password don't match"})
      }
 
@@ -84,16 +85,14 @@ export const login = async (req , res)=>{
    }
 
 
-export const logout = (req , res)=>{
-  try{
-     
-      res.cookie("jwt", "",{maxAge:0});
-      res.status(200).json({message:"loged out succesfully"});
-
-
-  }catch(error){
-    console.log("error in logout controller " ,{error});
-    res.status(500).json({error:"enternal server error"})
-  }
+export const logout = (req , res)=>{   //logout
+    try {
+      
+		res.cookie("jwt", "", { maxAge: 0 });
+		res.status(200).json({ message: "Logged out successfully" });
+	} catch (error) {
+		console.log("Error in logout controller", error.message);
+		res.status(500).json({ error: "Internal Server Error" });
+	}
 }
 
