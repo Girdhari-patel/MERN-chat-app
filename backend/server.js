@@ -8,14 +8,16 @@ import messegeRoutes from  "./routes/messege.routes.js";
 import userRoutes from  "./routes/user.routes.js";
 import connectToMongoDB from "./db/connectToMongdb.js";
 
+import { app, server } from "./socket/socket.js";
 dotenv.config();
  
 const PORT = process.env.PORT || 5001;
-const app = express();
+ 
 
-app.use(cors({
-  origin: 'http://localhost:3000', // Replace with your frontend URL
-}));
+var corsOptions = {
+    origin: "http://localhost:3000"
+  }
+  app.use(cors(corsOptions));
 
 app.use(express.json()); // to parse incoming requists with json payload from req.bady
 app.use(cookieParser());
@@ -35,7 +37,7 @@ app.get("/" , (req, res)=>{
 
  
 
-app.listen(PORT, ()=>{
+server.listen(PORT, ()=>{
     connectToMongoDB();
     console.log("server listining at port "+`${PORT}`)
 })
